@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck {
-  List<Card> cards;
-  Random rand;
+  private final List<Card> cards;
+  private final Random rand;
 
   public Deck(List<Card> cards, Random rand) {
     this.cards = new ArrayList<>(cards);
