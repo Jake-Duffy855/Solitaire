@@ -21,4 +21,46 @@ public class Stack {
   public Card getBottom() {
     return up.get(up.size() - 1);
   }
+
+  public boolean canPlay(Card card) {
+    return getBottom().isAbove(card);
+  }
+
+  public Stack play(Card card) {
+    if (canPlay(card)) {
+      List<Card> newUp = new ArrayList<>(up);
+      newUp.add(card);
+      return new Stack(new ArrayList<>(down), newUp);
+    }
+    throw new IllegalArgumentException("noooooooooo!");
+  }
+
+  @Override
+  public String toString() {
+    return down + "|" + up;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Stack stack = (Stack) o;
+
+    if (!down.equals(stack.down)) {
+      return false;
+    }
+    return up.equals(stack.up);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = down.hashCode();
+    result = 31 * result + up.hashCode();
+    return result;
+  }
 }

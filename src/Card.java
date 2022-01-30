@@ -4,10 +4,16 @@ public class Card {
 
   private final Suit suit;
   private final CardValue value;
+  private final SuitColor color;
 
   public Card(Suit suit, CardValue value) {
     this.suit = suit;
     this.value = value;
+    if (suit.equals(Suit.SPADES) || suit.equals(Suit.CLUBS)) {
+      this.color = SuitColor.BLACK;
+    } else {
+      this.color = SuitColor.RED;
+    }
   }
 
   public Suit getSuit() {
@@ -30,6 +36,12 @@ public class Card {
       throw new IllegalStateException("Ace has no next card down");
     }
     return new Card(suit, CardValue.fromValue(value.getValue() - 1));
+  }
+
+  public boolean isAbove(Card card) {
+    boolean oppositeColors = !color.equals(card.color);
+    boolean oneHigher = this.value.getValue() - 1 == card.value.getValue();
+    return oppositeColors && oneHigher;
   }
 
   @Override
