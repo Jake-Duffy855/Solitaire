@@ -23,6 +23,10 @@ public class Stack {
     return up.size() > 0;
   }
 
+  public boolean hasDown() {
+    return down.size() > 0;
+  }
+
   public Card getBottom() {
     if (notEmpty()) {
       return up.get(up.size() - 1);
@@ -36,6 +40,13 @@ public class Stack {
       return getBottom().isAbove(card);
     }
     return card.getValue().equals(CardValue.KING);
+  }
+
+  public boolean canPlay(Stack stack) {
+    if (notEmpty()) {
+      return getBottom().isAbove(stack.getTop());
+    }
+    return stack.getTop().getValue().equals(CardValue.KING) && stack.hasDown();
   }
 
   public Stack play(Card card) {

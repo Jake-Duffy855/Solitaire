@@ -45,27 +45,44 @@ public class DeckTest {
 
   @Test
   public void testReal() {
-    Deck deck = new Deck(new Random(2));
+    Deck deck = new Deck(new Random());
     deck.shuffle();
     SolitaireState s = new SolitaireState(deck);
     List<SolitaireState> states = new ArrayList<>();
     states.add(s);
     Set<SolitaireState> previousStates = new HashSet<>();
+    int iterations = 0;
+    int maxPlayed = 0;
     while (states.size() > 0) {
-      System.out.println(states.get(0));
       List<SolitaireState> newStates = new ArrayList<>();
       for (SolitaireState state : states) {
         previousStates.add(state);
         for (SolitaireState newState : state.getNextStates()) {
-          if (newState.isWon())
+          if (newState.isWon()) {
+            System.out.println("winner!");
+            System.out.println(previousStates.size());
+            System.out.println(iterations);
+            System.out.println(maxPlayed);
             return;
-          if (!previousStates.contains(newState)) {
-            newStates.add(newState);
+          }
+          if (!previousStates.contains(newState) && !newStates.contains(newState)) {
+            if (newState.numPlayed() > maxPlayed) {
+              maxPlayed = newState.numPlayed();
+//              System.out.println(newState.numPlayed());
+              newStates.add(0, newState);
+            } else {
+              newStates.add(newState);
+            }
           }
         }
-        break;
       }
-      states = newStates;
+      states = newStates.subList(0,Math.min(100, newStates.size()));
+      iterations++;
     }
+    System.out.println(previousStates.size());
+    System.out.println(iterations);
+    System.out.println(maxPlayed);
   }
+
+  /// MOVING KING TO NEW EMPTY STACK FROM STACK should work????
 }

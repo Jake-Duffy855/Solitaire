@@ -74,6 +74,10 @@ public class SolitaireState {
     return newStates;
   }
 
+  public int numPlayed() {
+    return middle.numPlayed();
+  }
+
   public boolean isWon() {
     return middle.numPlayed() == 52;
   }
