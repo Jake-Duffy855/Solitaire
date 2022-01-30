@@ -2,8 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stack {
-  List<Card> down;
-  List<Card> up;
+
+  private List<Card> down;
+  private List<Card> up;
 
   public Stack(List<Card> down, List<Card> up) {
     this.down = new ArrayList<>(down);
@@ -18,12 +19,23 @@ public class Stack {
     return up.get(0);
   }
 
+  public boolean notEmpty() {
+    return up.size() > 0;
+  }
+
   public Card getBottom() {
-    return up.get(up.size() - 1);
+    if (notEmpty()) {
+      return up.get(up.size() - 1);
+    } else {
+      throw new IllegalStateException("No bottom???");
+    }
   }
 
   public boolean canPlay(Card card) {
-    return getBottom().isAbove(card);
+    if (notEmpty()) {
+      return getBottom().isAbove(card);
+    }
+    return card.getValue().equals(CardValue.KING);
   }
 
   public Stack play(Card card) {
@@ -33,6 +45,40 @@ public class Stack {
       return new Stack(new ArrayList<>(down), newUp);
     }
     throw new IllegalArgumentException("noooooooooo!");
+  }
+
+  public Stack play(Stack other) {
+    List<Card> newUp = new ArrayList<>(up);
+    newUp.addAll(other.up);
+    return new Stack(new ArrayList<>(down), newUp);
+  }
+
+  public Stack playBottom() {
+    if (notEmpty()) {
+      if (up.size() > 1) {
+        return new Stack(down, up.subList(0, up.size() - 1));
+      } else if (down.size() > 0) {
+        return new Stack(down.subList(0, down.size() - 1),
+            down.subList(down.size() - 1, down.size()));
+      } else {
+        return new Stack(new ArrayList<>(), new ArrayList<>());
+      }
+    } else {
+      throw new IllegalStateException("No bottom???");
+    }
+  }
+
+  public Stack moveUp() {
+    if (notEmpty()) {
+      if (down.size() > 0) {
+        return new Stack(down.subList(0, down.size() - 1),
+            down.subList(down.size() - 1, down.size()));
+      } else {
+        return new Stack(new ArrayList<>(), new ArrayList<>());
+      }
+    } else {
+      throw new IllegalStateException("No bottom???");
+    }
   }
 
   @Override

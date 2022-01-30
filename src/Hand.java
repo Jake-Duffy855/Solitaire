@@ -3,8 +3,8 @@ import java.util.List;
 
 public class Hand {
 
-  List<Card> held;
-  List<Card> down;
+  private List<Card> held;
+  private List<Card> down;
 
   public Hand(List<Card> held, List<Card> down) {
     this.held = new ArrayList<>(held);

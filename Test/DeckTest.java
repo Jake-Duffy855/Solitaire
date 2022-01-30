@@ -63,6 +63,7 @@ public class DeckTest {
             newStates.add(newState);
           }
         }
+        break;
       }
       states = newStates;
     }

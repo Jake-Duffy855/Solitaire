@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-  List<Stack> stacks;
+
+  private List<Stack> stacks;
 
   public Board(List<Stack> stacks) {
     this.stacks = stacks;
@@ -35,6 +36,28 @@ public class Board {
         newStacks.remove(stackNumber);
         newStacks.add(stackNumber, newStack);
         newBoards.add(new Board(newStacks));
+      }
+    }
+    return newBoards;
+  }
+
+  public List<Board> moveStacks() {
+    List<Board> newBoards = new ArrayList<>();
+    for (int fromStackNumber = 0; fromStackNumber < stacks.size(); fromStackNumber++) {
+      Stack fromStack = stacks.get(fromStackNumber);
+      if (fromStack.notEmpty()) {
+        for (int toStackNumber = 0; toStackNumber < stacks.size(); toStackNumber++) {
+          Stack toStack = stacks.get(toStackNumber);
+          if (fromStackNumber != toStackNumber && toStack.notEmpty() && toStack.canPlay(
+              fromStack.getTop())) {
+            Stack newToStack = toStack.play(fromStack);
+            Stack newFromStack = fromStack.moveUp();
+            List<Stack> newStacks = new ArrayList<>(stacks);
+            newStacks.set(fromStackNumber, newFromStack);
+            newStacks.set(toStackNumber, newToStack);
+            newBoards.add(new Board(newStacks));
+          }
+        }
       }
     }
     return newBoards;

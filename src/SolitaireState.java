@@ -21,11 +21,8 @@ public class SolitaireState {
 
   public List<SolitaireState> getNextStates() {
     List<SolitaireState> newStates = new ArrayList<>();
-    newStates.addAll(playFromHand());
     newStates.addAll(playFromStacks());
-    // play from piles to middle
-
-    // move piles
+    newStates.addAll(playFromHand());
 
     return newStates;
   }
@@ -57,8 +54,22 @@ public class SolitaireState {
   public List<SolitaireState> playFromStacks() {
     List<SolitaireState> newStates = new ArrayList<>();
     // play from piles to middle
-
+    for (int stackNumber = 0; stackNumber < board.getStacks().size(); stackNumber++) {
+      Stack stack = board.getStacks().get(stackNumber);
+      if (stack.notEmpty() && middle.canPlay(stack.getBottom())) {
+        Middle newMiddle = middle.play(stack.getBottom());
+        Stack newStack = stack.playBottom();
+        List<Stack> newStacks = new ArrayList<>(board.getStacks());
+        newStacks.set(stackNumber, newStack);
+        Board newBoard = new Board(newStacks);
+        newStates.add(new SolitaireState(newBoard, newMiddle, hand));
+      }
+    }
     // move piles
+    List<Board> newBoards = board.moveStacks();
+    for (Board newBoard : newBoards) {
+      newStates.add(new SolitaireState(newBoard, middle, hand));
+    }
 
     return newStates;
   }
@@ -69,9 +80,9 @@ public class SolitaireState {
 
   @Override
   public String toString() {
-    String result = middle.toString() + "\n\n";
-    result += board.toString() + "\n";
-    result += hand.toString();
+    String result = middle.toString() + "\n";
+    result += board.toString();
+    result += hand.toString() + "\n";
     return result;
   }
 
