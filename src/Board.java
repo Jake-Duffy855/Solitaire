@@ -71,6 +71,7 @@ public class Board {
     return result;
   }
 
+  // maybe don't care about empty stacks or order of stacks
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -82,7 +83,12 @@ public class Board {
 
     Board board = (Board) o;
 
-    return stacks.equals(board.stacks);
+    for (int i = 0; i < stacks.size(); i++) {
+      if (!stacks.get(i).equals(board.stacks.get(i))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override

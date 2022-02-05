@@ -18,5 +18,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="me.tongfei.progressbar" level="project" />
+    <orderEntry type="library" name="cn.weiyinfu.tqdm" level="project" />
   </component>
 </module>

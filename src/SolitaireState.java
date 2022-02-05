@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SolitaireState {
 
@@ -35,7 +36,7 @@ public class SolitaireState {
       // play from hand to middle
       if (middle.canPlay(hand.getTopCard())) {
         newStates.add(
-            new SolitaireState(board, middle.play(hand.getTopCard()), hand.playTopCard()));
+                new SolitaireState(board, middle.play(hand.getTopCard()), hand.playTopCard()));
       }
       // play from hand to stacks
       List<Board> newBoards = board.play(hand.getTopCard());
@@ -101,20 +102,23 @@ public class SolitaireState {
 
     SolitaireState that = (SolitaireState) o;
 
-    if (!board.equals(that.board)) {
-      return false;
-    }
     if (!middle.equals(that.middle)) {
       return false;
     }
-    return hand.equals(that.hand);
+
+    if (!hand.equals(that.hand)) {
+      return false;
+    }
+
+    return board.equals(that.board);
   }
 
   @Override
   public int hashCode() {
-    int result = board.hashCode();
-    result = 13 * result + middle.hashCode();
-    result = 31 * result + hand.hashCode();
-    return result;
+//    int result = board.hashCode();
+//    result = 13 * result + middle.hashCode();
+//    result = 31 * result + hand.hashCode();
+//    return result;
+    return Objects.hash(board, middle, hand);
   }
 }

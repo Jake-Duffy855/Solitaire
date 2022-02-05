@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hand {
 
@@ -77,8 +78,9 @@ public class Hand {
 
   @Override
   public int hashCode() {
-    int result = held.hashCode();
-    result = 31 * result + down.hashCode();
-    return result;
+//    int result = held.hashCode();
+//    result = 31 * result + down.hashCode();
+//    return result;
+    return Objects.hash(held, down);
   }
 }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Stack {
 
@@ -116,8 +117,9 @@ public class Stack {
 
   @Override
   public int hashCode() {
-    int result = down.hashCode();
-    result = 31 * result + up.hashCode();
-    return result;
+//    int result = down.hashCode();
+//    result = 31 * result + up.hashCode();
+//    return result;
+    return Objects.hash(down, up);
   }
 }

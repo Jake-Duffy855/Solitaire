@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="cn.weiyinfu.tqdm" type="repository">
+    <properties maven-id="cn.weiyinfu:tqdm:1.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/weiyinfu/tqdm/1.0/tqdm-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
